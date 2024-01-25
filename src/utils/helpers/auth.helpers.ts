@@ -12,3 +12,9 @@ export const getUserFromStorage = () => {
   }
   return null
 }
+
+export const removeUserFromStorage = () => {
+  if (windowIsExists()) {
+    Cookies.remove(USER_KEY, { domain: '.cheber.online' })
+  }
+}
