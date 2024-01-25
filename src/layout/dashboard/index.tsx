@@ -4,8 +4,11 @@ import { RxHamburgerMenu } from 'react-icons/rx'
 import clsx from 'clsx'
 import { DASHBOARD_DATA } from '../../utils/constants/general'
 import { BiLogOut } from 'react-icons/bi'
+import { useAuth } from '../../hooks/useAuth'
+import { distinguishROLE } from '../../utils/helpers/general'
 
 export default function Dashboard() {
+  const { role } = useAuth()
   const [dashboardOpen, setDashboardOpen] = useState<boolean>(false)
 
   // const { logout } = useActions()
@@ -33,7 +36,7 @@ export default function Dashboard() {
               </div>
             </div>
             <div className='space-y-3'>
-              {DASHBOARD_DATA.map((item, index) => {
+              {DASHBOARD_DATA[distinguishROLE(role)].map((item, index) => {
                 return (
                   <Fragment key={index}>
                     <Link
