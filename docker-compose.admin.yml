@@ -1,0 +1,13 @@
+version: '3.9'
+services:
+  frontend_admin:
+    image: cheber-frontend-admin-dev
+    container_name: frontend_admin
+    ports:
+      - 8081:80
+    networks:
+      - admin-net
+
+networks:
+  admin-net:
+    driver: bridge

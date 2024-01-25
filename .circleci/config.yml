@@ -1,0 +1,88 @@
+version: 2.1
+
+parameters:
+  docker-container:
+    type: string
+    default: 'cheber-frontend-admin-dev'
+    description: 'Docker container name for Cheber Dev'
+  compose-file:
+    type: string
+    default: "docker-compose.admin.yml"
+    description: "Docker compose filename"
+
+jobs:
+  deploy-to-production:
+    docker:
+      - image: circleci/node:14
+      - image: docker:20.10.9
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run:
+          name: Build Docker Image
+          command: |
+            docker build -t << pipeline.parameters.docker-container >>:latest .
+      - run:
+          name: Compress Docker Image
+          command: |
+            docker save << pipeline.parameters.docker-container >>:latest | gzip > << pipeline.parameters.docker-container >>.tar.gz
+      - run:
+          name: Update Docker-compose.yml
+          command: |
+            sed -i 's@#image@<< pipeline.parameters.docker-container >>:latest@g' <<pipeline.parameters.compose-file>>
+      - run: ls -lh
+      - persist_to_workspace:
+          root: .
+          paths:
+            - << pipeline.parameters.docker-container >>.tar.gz
+            - <<pipeline.parameters.compose-file>>
+  transfer-and-run:
+    docker:
+      - image: circleci/node:14
+    steps:
+      - attach_workspace:
+          at: .
+      - run:
+          name: Install SSH And Configure
+          command: |
+            echo $SSH_PRIVATE_KEY | base64 --decode > ./privateKey.pem
+            chmod 400 privateKey.pem
+      - run:
+          name: Stop Remote Docker-Compose
+          command: |
+            ssh -o "StrictHostKeyChecking=no" -i ./privateKey.pem ubuntu@$HOST '
+            if [ -f <<pipeline.parameters.compose-file>> ]; then
+            sudo docker-compose -f <<pipeline.parameters.compose-file>> down --rmi all
+            sudo rm <<pipeline.parameters.compose-file>>
+            else
+            echo "<<pipeline.parameters.compose-file>> not found"
+            fi
+            '
+      - run:
+          name: Transfer Files
+          command: |
+            scp -o "StrictHostKeyChecking=no" -i ./privateKey.pem ./<< pipeline.parameters.docker-container >>.tar.gz ./<<pipeline.parameters.compose-file>> ubuntu@$HOST:~/
+      - run:
+          name: Decompress Docker Image | Run Compose
+          command: |
+            ssh -o "StrictHostKeyChecking=no" -i ./privateKey.pem ubuntu@$HOST '
+            sudo gunzip -c ./<< pipeline.parameters.docker-container >>.tar.gz | sudo docker load
+            sudo rm ./<< pipeline.parameters.docker-container >>.tar.gz
+            sudo docker-compose -f <<pipeline.parameters.compose-file>> up -d
+            '
+
+workflows:
+  deploy-dev:
+    jobs:
+      - deploy-to-development:
+          filters:
+            branches:
+              only:
+                - development
+      - transfer-and-run:
+          requires:
+            - deploy-to-development
+          filters:
+            branches:
+              only:
+                - development
