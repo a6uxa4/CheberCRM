@@ -11,7 +11,7 @@ parameters:
     description: "Docker compose filename"
 
 jobs:
-  deploy-to-production:
+  deploy-to-development:
     docker:
       - image: circleci/node:14
       - image: docker:20.10.9
