@@ -17,11 +17,6 @@ export const DASHBOARD_DATA = [
       navigate: '/company'
     },
     {
-      icon: IoMdSettings,
-      name: 'Настройки',
-      navigate: '/settings'
-    },
-    {
       icon: IoMdInformationCircle,
       name: 'Тарифы',
       navigate: '/tariffs'
@@ -30,6 +25,11 @@ export const DASHBOARD_DATA = [
       icon: MdAnnouncement,
       name: 'Объявления',
       navigate: '/announcements'
+    },
+    {
+      icon: IoMdSettings,
+      name: 'Настройки',
+      navigate: '/settings'
     },
     {
       icon: BiSupport,
