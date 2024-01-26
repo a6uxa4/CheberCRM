@@ -43,7 +43,7 @@ export const BranchPage = () => {
     {
       label: 'Действие',
       skeletonKey: 'SKbuttonDU',
-      action: (item: ITableData) => {
+      action: () => {
         return (
           <EditDeleteButtons
             onDelete={() => console.log('delete')}
