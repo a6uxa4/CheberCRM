@@ -19,7 +19,7 @@ export const EventContent = ({ info }: any) => {
     <Tooltip
       className={`${translateAppointmentStatusColor(
         info.event.extendedProps.appointmentStatus
-      )}`}
+      )} z-[9999]`}
       content={
         <div className='flex flex-col items-start justify-center gap-2 p-1 text-[15px]'>
           <span>Мастер: {info.event.title}</span>
