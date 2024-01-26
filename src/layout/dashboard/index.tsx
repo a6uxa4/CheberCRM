@@ -1,4 +1,4 @@
-import { Fragment, createElement, useState } from 'react'
+import { Fragment, createElement, useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { RxHamburgerMenu } from 'react-icons/rx'
 import clsx from 'clsx'
@@ -6,10 +6,24 @@ import { DASHBOARD_DATA } from '../../utils/constants/general'
 import { BiLogOut } from 'react-icons/bi'
 import { useAuth } from '../../hooks/useAuth'
 import { distinguishROLE } from '../../utils/helpers/general'
+import { useGetBranchAdminQuery } from '../../services/branch.service'
+import { useLocalStorage } from '../../hooks/useLocalStorage'
+import { IResBranchAdmin } from '../../common/branch.common'
 
 export default function Dashboard() {
   const { role } = useAuth()
   const [dashboardOpen, setDashboardOpen] = useState<boolean>(false)
+
+  const { data: BranchData = null } = useGetBranchAdminQuery()
+
+  const [_, setBranchDataLocal] = useLocalStorage<IResBranchAdmin | null>(
+    '_@BRANCH_DATA',
+    null
+  )
+
+  useEffect(() => {
+    setBranchDataLocal(BranchData)
+  }, [BranchData])
 
   // const { logout } = useActions()
   const { pathname } = useLocation()

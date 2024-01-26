@@ -7,3 +7,14 @@ export interface IResBranch {
   domain: string
   main: true
 }
+
+export interface IResBranchAdmin {
+  companyId: number
+  companyName: string
+  branchId: number
+  address: string
+  phoneNumber: string
+  instagram: string
+  image: string
+  domain: string
+}

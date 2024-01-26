@@ -8,7 +8,7 @@ export const CompanyPage = () => {
   const [currentPage, setCurrentPage] = useState<number | string>(1)
   const { data: companyData = [], isLoading } = useGetCompanyQuery()
 
-  const COLUMNS_PRODUCT = [
+  const COLUMNS = [
     { label: '№', accessKey: 'indexOF' },
     {
       label: 'Лого',
@@ -44,7 +44,7 @@ export const CompanyPage = () => {
     <div>
       <Breadcrumbs crumbs={BREADCRUMBS_HEADER} />
       <Table
-        columns={COLUMNS_PRODUCT}
+        columns={COLUMNS}
         data={transformedData}
         isLoading={isLoading}
         currentPage={currentPage}

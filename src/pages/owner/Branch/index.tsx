@@ -11,7 +11,7 @@ export const BranchPage = () => {
 
   const { data: branchData = [], isLoading } = useGetBranchQuery()
 
-  const COLUMNS_PRODUCT = [
+  const COLUMNS = [
     { label: '№', accessKey: 'indexOF' },
     {
       label: 'Фото',
@@ -65,7 +65,7 @@ export const BranchPage = () => {
     <div>
       <Breadcrumbs crumbs={BREADCRUMBS_HEADER} />
       <Table
-        columns={COLUMNS_PRODUCT}
+        columns={COLUMNS}
         data={transformedData}
         isLoading={isLoading}
         totalPages={0}
