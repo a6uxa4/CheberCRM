@@ -10,3 +10,20 @@ export const distinguishROLE = (
       return 2
   }
 }
+
+export function translateAppointmentStatus(name: string) {
+  switch (name) {
+    case 'IN_PROCESSING':
+      return 'В оброботке'
+    case 'CONFIRMED':
+      return 'Подтвержден'
+    case 'ARRIVE':
+      return 'Пришел'
+    case 'COMPLETED':
+      return 'Завершенный'
+    case 'CANCELED':
+      return 'Отменен'
+    default:
+      return 'Подтвержден'
+  }
+}

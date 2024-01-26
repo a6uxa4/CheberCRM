@@ -25,6 +25,21 @@ export function AppointmentStatusColor(type: string) {
   }
 }
 
+export function translateAppointmentStatusColor(name: string) {
+  switch (name) {
+    case 'IN_PROCESSING':
+      return 'bg-[#e59560]'
+    case 'CONFIRMED':
+      return 'bg-[#5a8100]'
+    case 'ARRIVE':
+      return 'bg-[#647295]'
+    case 'COMPLETED':
+      return 'bg-[#FF6347]'
+    case 'CANCELED':
+      return 'bg-[#d05663]'
+  }
+}
+
 export const configCalendar = ({
   calendarRef,
   search
