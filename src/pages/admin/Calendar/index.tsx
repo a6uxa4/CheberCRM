@@ -17,6 +17,7 @@ import { useGetCalendarQuery } from '../../../services/calendar.service'
 
 import { EventContent } from './Components/EventContent'
 import { useLocation, useSearchParams } from 'react-router-dom'
+import { CreateAppointment } from './Modal/Create'
 
 export const CalendarPage = () => {
   const [appointmentCalendarModal, setAppointmentCalendarModal] = useState({
@@ -130,6 +131,7 @@ export const CalendarPage = () => {
       <Backdrop sx={isLoadingSx} open={isLoading}>
         <CircularProgress color='inherit' />
       </Backdrop>
+      <CreateAppointment />
       <FullCalendar
         ref={calendarRef}
         datesSet={event => handleThisMoment(event)}

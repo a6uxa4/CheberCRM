@@ -21,8 +21,6 @@ export const UsersPage = () => {
     }
   )
 
-  console.log(personalData)
-
   const COLUMNS = [
     { label: '№', accessKey: 'indexOF' },
     {

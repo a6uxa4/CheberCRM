@@ -9,3 +9,8 @@ export interface IResUsers {
   avatar: string
   bonus: number
 }
+
+export interface IResUsersSelect {
+  userId: number
+  fullName: string
+}
