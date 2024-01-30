@@ -14,14 +14,17 @@ export const DatePicker = ({
   scheduleData,
   endTime,
   onDate,
-  onTime
+  onTime,
+  values
 }: {
   label: string
   scheduleData: { startTime: string; endTime: string }[]
-  endTime?: number
+  endTime?: string
   onDate: (e: string) => void
   onTime: (e: string) => void
+  values: string
 }) => {
+  const [date, start] = values.split('~')
   const [isOpen, setIsOpen] = useState(false)
   const [newDate, setNewDate] = useState(new Date())
   const [value, setValue] = useState({
@@ -34,9 +37,14 @@ export const DatePicker = ({
   }
 
   useEffect(() => {
-    onDate(format(newDate, 'yyyy-MM-dd'))
-    setValue({ ...value, date: format(newDate, 'yyyy-MM-dd') })
-  }, [])
+    if (date !== '') {
+      onDate(date)
+      setValue({ time: start, date: date })
+    } else {
+      onDate(format(newDate, 'yyyy-MM-dd'))
+      setValue({ ...value, date: format(newDate, 'yyyy-MM-dd') })
+    }
+  }, [date])
 
   function handleChangeDate(date: Date) {
     setNewDate(date)
@@ -65,7 +73,9 @@ export const DatePicker = ({
             className='w-full max-w-[90%] outline-none text-[14px] bg-[#f9fafb] text-[#455a64]'
             readOnly
             placeholder='ГГГГ-ММ-ДД ~ ЧЧ-MM-СС'
-            value={`${value.date} ~ ${value.time}`}
+            value={`${value.date} ~ ${value.time} ${
+              endTime !== '' ? '-' : ''
+            } ${endTime}`}
           />
           <svg
             xmlns='http://www.w3.org/2000/svg'
@@ -108,7 +118,7 @@ export const DatePicker = ({
                   <span
                     onClick={() => handleChangeTime(item.startTime)}
                     key={item.startTime}
-                    className='bg-[#eff8f9] px-2 py-1 rounded-md w-full flex items-center justify-center hover:bg-[#00d6d4] hover:text-white cursor-pointer'
+                    className='bg-green-50 text-black px-2 py-1 rounded-md w-full flex items-center justify-center hover:bg-[#31a010] hover:text-white cursor-pointer'
                   >
                     {item.startTime}
                   </span>

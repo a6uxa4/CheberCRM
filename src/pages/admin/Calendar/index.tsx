@@ -29,23 +29,10 @@ export const CalendarPage = () => {
     endTime: '',
     masterId: []
   })
-  const [appointmentDataMasterView, setAppointmentDataView] = useState({
-    masterId: null,
-    serviceIds: [],
-    appointmentStatus: {
-      label: 'Оброботке',
-      value: 'IN_PROCESSING'
-    },
-    startDate: '',
-    startTime: '',
-    endTime: '',
-    description: '',
-    userId: null,
-    freeTimeScheduleMaster: []
-  })
 
   const [appointmentsCalendarData, setAppointmentsCalendarData] = useState({
-    masterId: null,
+    masterId: '',
+    userId: '',
     serviceIds: [],
     appointmentStatus: {
       label: 'Оброботке',
@@ -78,8 +65,6 @@ export const CalendarPage = () => {
       ...appointmentsCalendarData,
       startDate: format(event.startStr, 'yyyy-MM-dd')
     })
-
-    console.log('Create', event)
   }
 
   function handleChangeEventClick(event: EventClickArg) {
@@ -96,10 +81,6 @@ export const CalendarPage = () => {
     const endDate = new Date(event.endStr)
 
     setSearchParams({ type: event.view.type })
-    setAppointmentDataView({
-      ...appointmentDataMasterView,
-      startDate: format(endDate, 'yyyy-MM-dd')
-    })
 
     const calendarApi = (calendarRef.current as any)?.getApi()
     const buttons = calendarApi?.el?.querySelectorAll(
@@ -124,6 +105,27 @@ export const CalendarPage = () => {
     }
   }
 
+  function handleClose() {
+    setAppointmentCalendarModal({
+      update: false,
+      create: false
+    })
+
+    setAppointmentsCalendarData({
+      masterId: '',
+      userId: '',
+      serviceIds: [],
+      appointmentStatus: {
+        label: 'Оброботке',
+        value: 'IN_PROCESSING'
+      },
+      startDate: '',
+      startTime: '',
+      endTime: '',
+      description: ''
+    })
+  }
+
   // ----------------------------------------------------------------------------
 
   return (
@@ -131,7 +133,12 @@ export const CalendarPage = () => {
       <Backdrop sx={isLoadingSx} open={isLoading}>
         <CircularProgress color='inherit' />
       </Backdrop>
-      <CreateAppointment />
+      <CreateAppointment
+        appointmentsCalendarData={appointmentsCalendarData}
+        setAppointmentsCalendarData={setAppointmentsCalendarData}
+        handleClose={handleClose}
+        appointmentCalendarModal={appointmentCalendarModal}
+      />
       <FullCalendar
         ref={calendarRef}
         datesSet={event => handleThisMoment(event)}

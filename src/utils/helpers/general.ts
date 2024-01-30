@@ -32,6 +32,9 @@ export function calculateEndTime(
   startTime: string,
   fullDuration: number
 ): string {
+  if (startTime === '') {
+    return ''
+  }
   const [startHours, startMinutes] = startTime.split(':').map(Number)
   let hours = Math.floor(fullDuration / 60)
   let minutes = fullDuration % 60
