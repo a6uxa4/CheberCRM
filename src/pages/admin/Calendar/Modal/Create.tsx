@@ -12,6 +12,7 @@ import {
   calculateEndTime,
   translateDuration
 } from '../../../../utils/helpers/general'
+import { Button } from '@material-tailwind/react'
 
 export const CreateAppointment = ({
   setAppointmentsCalendarData,
@@ -51,10 +52,10 @@ export const CreateAppointment = ({
   return (
     <Modal
       isOpen={appointmentCalendarModal.create}
-      headline='2024'
+      headline='Новый визит'
       handleClose={handleClose}
     >
-      <div className='w-[400px] p-5 flex flex-col gap-5'>
+      <div className='flex flex-col items-center justify-center gap-3 p-2 min-w-[350px] mt-3'>
         <SelectDefault
           label='Клиент'
           value={appointmentsCalendarData.userId}
@@ -83,6 +84,26 @@ export const CreateAppointment = ({
             return { label: item.fullName, value: item.masterId }
           })}
         />
+        <SelectDefault
+          label='Услуги'
+          value={appointmentsCalendarData.serviceIds}
+          onChange={e =>
+            setAppointmentsCalendarData({
+              ...appointmentsCalendarData,
+              serviceIds: e.target.value.split(',').map(Number)
+            })
+          }
+          placeholder='Выберите услугу'
+          type='multiple'
+          option={masterServiceData.map(item => {
+            return {
+              label: `${item.name} ${item.price}с ${translateDuration(
+                item.duration
+              )}`,
+              value: item.id
+            }
+          })}
+        />
         <DatePicker
           label='Дата'
           scheduleData={freeTimeData}
@@ -105,33 +126,13 @@ export const CreateAppointment = ({
             })
           }}
         />
-        <SelectDefault
-          label='Услуги'
-          value={appointmentsCalendarData.serviceIds}
-          onChange={e =>
-            setAppointmentsCalendarData({
-              ...appointmentsCalendarData,
-              serviceIds: e.target.value.split(',').map(Number)
-            })
-          }
-          placeholder='Выберите услугу'
-          type='multiple'
-          option={masterServiceData.map(item => {
-            return {
-              label: `${item.name} ${item.price}с ${translateDuration(
-                item.duration
-              )}`,
-              value: item.id
-            }
-          })}
-        />
         <Textarea
           label='Комментарий'
           value={appointmentsCalendarData.description}
-          onChange={e =>
+          onValueChange={e =>
             setAppointmentsCalendarData({
               ...appointmentsCalendarData,
-              description: e.target.value
+              description: e
             })
           }
           placeholder='Оставьте комментарий'
@@ -141,6 +142,14 @@ export const CreateAppointment = ({
             inputWrapper: 'bg-[#f9fafb] hover:!bg-[#f9fafb]'
           }}
         />
+        <div className='w-full flex items-center justify-end gap-5 row-span-4'>
+          <Button onClick={handleClose} color='green' variant='outlined'>
+            Отмена
+          </Button>
+          <Button color='green' variant='filled'>
+            Сохранить
+          </Button>
+        </div>
       </div>
     </Modal>
   )

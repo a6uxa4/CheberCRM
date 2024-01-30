@@ -61,7 +61,7 @@ export const DatePicker = ({
   return (
     <Popover placement='bottom' onOpenChange={togglePopover} isOpen={isOpen}>
       <PopoverTrigger>
-        <div className='group bg-[#f9fafb] w-full flex flex-col px-3 py-2 rounded-xl items-start relative cursor-pointer border-[1px] border-[#B0BEC5]'>
+        <div className='group bg-[#f9fafb] w-full h-fit flex flex-col px-3 py-2 rounded-xl items-start relative cursor-pointer border-[1px] border-[#B0BEC5]'>
           <label
             htmlFor='FieldDate'
             className='text-[12px] text-[#52525B] font-sans leading-5 pr-[8px]'
