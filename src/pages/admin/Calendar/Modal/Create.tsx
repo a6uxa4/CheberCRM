@@ -143,10 +143,15 @@ export const CreateAppointment = ({
           }}
         />
         <div className='w-full flex items-center justify-end gap-5 row-span-4'>
-          <Button onClick={handleClose} color='green' variant='outlined'>
+          <Button
+            onClick={handleClose}
+            color='green'
+            variant='outlined'
+            placeholder='Enter text'
+          >
             Отмена
           </Button>
-          <Button color='green' variant='filled'>
+          <Button color='green' variant='filled' placeholder='Enter text'>
             Сохранить
           </Button>
         </div>
