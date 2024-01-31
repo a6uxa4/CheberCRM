@@ -18,11 +18,16 @@ import { useGetCalendarQuery } from '../../../services/calendar.service'
 import { EventContent } from './Components/EventContent'
 import { useLocation, useSearchParams } from 'react-router-dom'
 import { CreateAppointment } from './Modal/Create'
+import { Payment } from './Modal/Payment'
 
 export const CalendarPage = () => {
   const [appointmentCalendarModal, setAppointmentCalendarModal] = useState({
     create: false,
-    update: false
+    update: false,
+    payment: {
+      modal: false,
+      title: ''
+    }
   })
   const [thisData, setThisData] = useState({
     startTime: '',
@@ -105,25 +110,46 @@ export const CalendarPage = () => {
     }
   }
 
+  function handlePayment(event: any) {
+    setAppointmentCalendarModal({
+      ...appointmentCalendarModal,
+      payment: {
+        modal: true,
+        title: `${event.event.extendedProps.userFirstName} ${
+          event.event.extendedProps.userLastName
+        }~${event.event.extendedProps.services.reduce(
+          (acc: number, amount: any) => {
+            return acc + amount.price
+          },
+          0
+        )}~${event.event.extendedProps.appointmentId}`
+      }
+    })
+  }
+
   function handleClose() {
     setAppointmentCalendarModal({
       update: false,
-      create: false
+      create: false,
+      payment: {
+        modal: false,
+        title: ''
+      }
     })
 
-    setAppointmentsCalendarData({
-      masterId: '',
-      userId: '',
-      serviceIds: [],
-      appointmentStatus: {
-        label: 'Оброботке',
-        value: 'IN_PROCESSING'
-      },
-      startDate: '',
-      startTime: '',
-      endTime: '',
-      description: ''
-    })
+    // setAppointmentsCalendarData({
+    //   masterId: '',
+    //   userId: '',
+    //   serviceIds: [],
+    //   appointmentStatus: {
+    //     label: 'Оброботке',
+    //     value: 'IN_PROCESSING'
+    //   },
+    //   startDate: '',
+    //   startTime: '',
+    //   endTime: '',
+    //   description: ''
+    // })
   }
 
   // ----------------------------------------------------------------------------
@@ -136,6 +162,10 @@ export const CalendarPage = () => {
       <CreateAppointment
         appointmentsCalendarData={appointmentsCalendarData}
         setAppointmentsCalendarData={setAppointmentsCalendarData}
+        handleClose={handleClose}
+        appointmentCalendarModal={appointmentCalendarModal}
+      />
+      <Payment
         handleClose={handleClose}
         appointmentCalendarModal={appointmentCalendarModal}
       />
@@ -167,7 +197,7 @@ export const CalendarPage = () => {
         // }}
         // eventDrop={e => handleChangeDragAndDrop(e)}
         eventContent={event => {
-          return <EventContent info={event} />
+          return <EventContent handlePayment={handlePayment} info={event} />
         }}
         events={CalendarData?.map((item: IResCalendar) => ({
           ...item,

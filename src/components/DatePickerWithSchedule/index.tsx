@@ -5,7 +5,7 @@ import {
   ScrollShadow
 } from '@nextui-org/react'
 import { useEffect, useState } from 'react'
-import { MiniCalendar } from '../mini-calendar'
+import { MiniCalendar } from '../Mini-calendar'
 import { format } from 'date-fns'
 import clsx from 'clsx'
 

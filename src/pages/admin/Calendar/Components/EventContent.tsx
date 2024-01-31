@@ -14,7 +14,7 @@ import {
 import { translateAppointmentStatus } from '../../../../utils/helpers/general'
 import { translateAppointmentStatusColor } from '../../../../utils/constants/calendar'
 
-export const EventContent = ({ info }: any) => {
+export const EventContent = ({ info, handlePayment }: any) => {
   return (
     <Tooltip
       className={`${translateAppointmentStatusColor(
@@ -90,6 +90,7 @@ export const EventContent = ({ info }: any) => {
         </MenuHandler>
         <MenuList className='z-[9999]' placeholder='Menu'>
           <MenuItem
+            onClick={() => handlePayment(info)}
             className='flex items-center justify-start gap-2 hover:!bg-green-50'
             placeholder='Menu'
           >

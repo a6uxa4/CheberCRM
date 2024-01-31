@@ -7,6 +7,7 @@ import calendarService from '../services/calendar.service'
 import userService from '../services/user.service'
 import masterService from '../services/master.service'
 import serviceService from '../services/service.service'
+import paymentService from '../services/payment.service'
 
 export const store = configureStore({
   reducer: {
@@ -16,7 +17,8 @@ export const store = configureStore({
     [calendarService.reducerPath]: calendarService.reducer,
     [userService.reducerPath]: userService.reducer,
     [masterService.reducerPath]: masterService.reducer,
-    [serviceService.reducerPath]: serviceService.reducer
+    [serviceService.reducerPath]: serviceService.reducer,
+    [paymentService.reducerPath]: paymentService.reducer
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware().concat(
@@ -25,7 +27,8 @@ export const store = configureStore({
       calendarService.middleware,
       userService.middleware,
       masterService.middleware,
-      serviceService.middleware
+      serviceService.middleware,
+      paymentService.middleware
     )
 })
 
