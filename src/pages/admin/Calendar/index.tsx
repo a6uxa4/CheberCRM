@@ -137,19 +137,19 @@ export const CalendarPage = () => {
       }
     })
 
-    // setAppointmentsCalendarData({
-    //   masterId: '',
-    //   userId: '',
-    //   serviceIds: [],
-    //   appointmentStatus: {
-    //     label: 'Оброботке',
-    //     value: 'IN_PROCESSING'
-    //   },
-    //   startDate: '',
-    //   startTime: '',
-    //   endTime: '',
-    //   description: ''
-    // })
+    setAppointmentsCalendarData({
+      masterId: '',
+      userId: '',
+      serviceIds: [],
+      appointmentStatus: {
+        label: 'Оброботке',
+        value: 'IN_PROCESSING'
+      },
+      startDate: '',
+      startTime: '',
+      endTime: '',
+      description: ''
+    })
   }
 
   // ----------------------------------------------------------------------------
