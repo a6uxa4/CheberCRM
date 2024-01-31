@@ -1,6 +1,10 @@
 import { createApi } from '@reduxjs/toolkit/query/react'
 import { baseQueryWithReauth } from '../api/baseQueryWithReauth'
-import { IPostPaymentProps } from '../common/payment.common'
+import {
+  IPostPaymentProps,
+  IGetPaymentProps,
+  IResPaymentProps
+} from '../common/payment.common'
 
 const paymentService = createApi({
   reducerPath: 'paymentApi',
@@ -15,12 +19,16 @@ const paymentService = createApi({
           body: data
         }
       }
-    })
+    }),
 
     // -------------------------------------------------------------------------->
+
+    getPayment: builder.query<IResPaymentProps, IGetPaymentProps>({
+      query: appointmentId => `payments/wantsToPay/${appointmentId}`
+    })
   })
 })
 
-export const { usePostPaymentMutation } = paymentService
+export const { usePostPaymentMutation, useGetPaymentQuery } = paymentService
 
 export default paymentService

@@ -6,3 +6,13 @@ export interface IPostPaymentProps {
     discount: number
   }
 }
+
+export interface IResPaymentProps {
+  sum: number
+  appointmentStatus: string
+  bonus: number
+}
+
+export interface IGetPaymentProps {
+  appointmentId: number
+}
