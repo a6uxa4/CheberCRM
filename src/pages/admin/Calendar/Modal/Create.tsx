@@ -55,7 +55,7 @@ export const CreateAppointment = ({
       headline='Новый визит'
       handleClose={handleClose}
     >
-      <div className='flex flex-col items-center justify-center gap-3 p-2 min-w-[350px] mt-3'>
+      <div className='flex flex-col items-center justify-center gap-3 p-2 min-w-[350px] max-w-[350px] mt-3'>
         <SelectDefault
           label='Клиент'
           value={appointmentsCalendarData.userId}
