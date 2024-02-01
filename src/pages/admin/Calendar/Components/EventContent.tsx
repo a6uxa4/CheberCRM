@@ -20,14 +20,14 @@ import Tooltip, { TooltipProps } from '@mui/material/Tooltip'
 
 interface LightTooltipProps extends TooltipProps {
   className?: string
-  backgroundColor: any
+  backgroundcolor: any
 }
 
 const LightTooltip = styled(({ className, ...props }: LightTooltipProps) => (
   <Tooltip {...props} classes={{ popper: className }} />
-))(({ backgroundColor }) => ({
+))(({ backgroundcolor }) => ({
   [`& .MuiTooltip-tooltip`]: {
-    backgroundColor: backgroundColor,
+    backgroundColor: backgroundcolor,
     width: 250,
     fontWeight: 500,
     color: 'aliceblue',
@@ -40,11 +40,9 @@ const LightTooltip = styled(({ className, ...props }: LightTooltipProps) => (
 
 export const EventContent = ({ info, handlePayment }: any) => {
   return (
-    // <Menu>
-    //   <MenuHandler>
     <LightTooltip
       placement='top'
-      backgroundColor={AppointmentStatusColor(
+      backgroundcolor={AppointmentStatusColor(
         info.event.extendedProps.appointmentStatus
       )}
       title={
@@ -114,7 +112,6 @@ export const EventContent = ({ info, handlePayment }: any) => {
       </div>
     </LightTooltip>
 
-    //     </MenuHandler>
     //     <MenuList className='z-[9999]' placeholder='Menu'>
     //       <MenuItem
     //         onClick={() => handlePayment(info)}
@@ -138,7 +135,5 @@ export const EventContent = ({ info, handlePayment }: any) => {
     //         <MdFreeCancellation />
     //         Отменить запись
     //       </MenuItem>
-    //     </MenuList>
-    //   </Menu>
   )
 }
