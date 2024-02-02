@@ -46,7 +46,7 @@ export const BranchPage = () => {
       action: () => {
         return (
           <EditDeleteButtons
-            onDelete={() => console.log('delete')}
+            onDelete={() => console.log('delet')}
             onEdit={() => console.log('edit')}
           />
         )
