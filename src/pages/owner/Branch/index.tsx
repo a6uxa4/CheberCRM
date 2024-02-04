@@ -39,7 +39,7 @@ export const BranchPage = () => {
         return <Rating rating={rating} />
       }
     },
-    { label: 'Телефон', accessKey: 'phoneNumber' },
+    { label: 'Телефон', accessKey: 'phoneNumbe' },
     {
       label: 'Действие',
       skeletonKey: 'SKbuttonDU',
